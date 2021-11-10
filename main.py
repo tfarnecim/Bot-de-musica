@@ -51,22 +51,22 @@ async def on_message(message):
         await message.channel.send("Música _" + musicanova + "_  adicionada com sucesso!!!")
 
     if message.content.startswith('$remove '):
-        
+
         entrada = ""
         for i in range(8,len(message.content)):
             entrada += message.content[i]
 
         if(not entrada.isnumeric()):
-            await message.channel.send("Especifique o número da música da lista que deve ser removida!!")            
-            return 
+            await message.channel.send("Especifique o número da música da lista que deve ser removida!!")
+            return
 
         f = open('musicas.txt','r')
         lines = f.readlines()
 
         if(int(entrada) < 0 or int(entrada) > len(lines)):
-            await message.channel.send("Posição da lista inválida!!")            
-            return 
-        
+            await message.channel.send("Posição da lista inválida!!")
+            return
+
         f.close()
         del lines[int(entrada)]
 
@@ -103,22 +103,22 @@ async def on_message(message):
         await message.channel.send("Música _" + musicanova + "_  adicionada com sucesso!!!")
 
     if message.content.startswith('$r '):
-        
+
         entrada = ""
         for i in range(3,len(message.content)):
             entrada += message.content[i]
 
         if(not entrada.isnumeric()):
-            await message.channel.send("Especifique o número da música da lista que deve ser removida!!")            
-            return 
+            await message.channel.send("Especifique o número da música da lista que deve ser removida!!")
+            return
 
         f = open('musicas2.txt','r')
         lines = f.readlines()
 
         if(int(entrada) < 0 or int(entrada) > len(lines)):
-            await message.channel.send("Posição da lista inválida!!")            
-            return 
-        
+            await message.channel.send("Posição da lista inválida!!")
+            return
+
         f.close()
         del lines[int(entrada)]
 
@@ -148,7 +148,7 @@ async def on_message(message):
         await message.channel.send(musicas)
 
     if message.content.startswith('$letreiro '):
-        
+
         mensagem = ""
         entrada = message.content
 
