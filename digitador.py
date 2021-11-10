@@ -3,6 +3,7 @@
 import time
 import pyautogui
 import os
+import random
 
 print("INICIANDO...")
 time.sleep(5)
@@ -15,6 +16,9 @@ os.system("git pull")
 #Abrindo o arquivo e dando o !add
 f = open((os.path.realpath(__file__)) + "/../../musicas/musicas.txt",'r')
 linhas = f.readlines()
+
+#Até que enfim embaralhando a lista
+random.suffle(linhas)
 
 for i in linhas:
 	pyautogui.write("!add " + i)
