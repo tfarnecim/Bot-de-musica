@@ -2,6 +2,19 @@
 
 import discord
 import time
+import os
+
+def abre(modo):
+    #Atualizando o arquivo do repositório
+    os.chdir((os.path.realpath(__file__)) + "/../../musicas")
+    os.system("git pull")
+    return open((os.path.realpath(__file__)) + "/../../musicas/musicas.txt", modo)
+
+def envia():
+    os.chdir((os.path.realpath(__file__)) + "/../../musicas")
+    os.system("git add .")
+    os.system('git commit -m "bot changing playlist..."')
+    os.system('git push')
 
 def mostre(texto,comp):
     sobra = comp - len(texto)
@@ -30,7 +43,8 @@ async def on_message(message):
     '''FUNÇÕES PRA USAR NO CS'''
 
     if message.content.startswith('$lista'):
-        f = open('musicas.txt','r')
+        await message.channel.send("Baixando lista...")
+        f = abre('r')
         linhas = f.readlines()
         conteudo = "```\nMÚSICAS\n\n"
         cnt = 0
@@ -42,12 +56,15 @@ async def on_message(message):
         await message.channel.send(conteudo)
 
     if message.content.startswith('$adiciona '):
-        f = open('musicas.txt','a')
+        await message.channel.send("Baixando lista...")
+        f = abre('a')
         musicanova = ""
         for i in range(10,len(message.content)):
             musicanova += message.content[i]
         f.write(musicanova+"\n")
         f.close()
+        await message.channel.send("Enviando modificações...")
+        envia()
         await message.channel.send("Música _" + musicanova + "_  adicionada com sucesso!!!")
 
     if message.content.startswith('$remove '):
@@ -60,7 +77,8 @@ async def on_message(message):
             await message.channel.send("Especifique o número da música da lista que deve ser removida!!")
             return
 
-        f = open('musicas.txt','r')
+        await message.channel.send("Baixando lista...")
+        f = abre('r')
         lines = f.readlines()
 
         if(int(entrada) < 0 or int(entrada) > len(lines)):
@@ -76,6 +94,8 @@ async def on_message(message):
             new_file.write(line)
 
         new_file.close()
+        await message.channel.send("Enviando modificações...")
+        envia()
         await message.channel.send("Música removida com sucesso!!")
 
     '''FUNÇÕES PRA USAR COM SAMIRA'''
@@ -160,5 +180,4 @@ async def on_message(message):
 
         await message.channel.send("```-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n" + "-                                                       -\n" + "-                                                       -\n" + "-"+mostre(mensagem,55)+"-\n" + "-                                                       -\n" + "-                                                       -\n" + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-```")
 
-
-client.run("ODg4NTk1NDc0NTk1MDgyMjcw.YUU_Bg.cc90Q5JIp_qGHShFYDpjfHSPKZI")
+client.run(str(os.environ.get("discord_bot_id")))
