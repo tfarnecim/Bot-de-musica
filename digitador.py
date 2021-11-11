@@ -18,7 +18,7 @@ f = open((os.path.realpath(__file__)) + "/../../musicas/musicas.txt",'r')
 linhas = f.readlines()
 
 #Até que enfim embaralhando a lista
-random.suffle(linhas)
+random.shuffle(linhas)
 
 for i in linhas:
 	pyautogui.write("!add " + i)
